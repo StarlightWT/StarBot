@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema({
 	username: String,
 	id: String,
+	discordId: String,
 	subscribed: Boolean,
 	role: String,
 });
