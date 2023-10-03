@@ -11,7 +11,6 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("connect")
 		.setDescription("connect your discord account with StarDash")
-		.setDefaultMemberPermissions(PermissionFlagsBits.ManageNicknames)
 		.addStringOption((option) =>
 			option
 				.setName("token")
