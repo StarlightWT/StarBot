@@ -22,11 +22,18 @@ module.exports = {
 		const token = interaction.options.getString("token");
 		await mongoose.connect(config.DATABASE_URI);
 
-		await schema.userModel.findOneAndUpdate(
-			{ id: token },
-			{ discordId: interaction.user.id }
-		);
+		await schema.userModel
+			.findOneAndUpdate(
+				{ id: token },
+				{
+					discordId: interaction.user.id,
+					tier: interaction.member.roles.highest.name,
+				}
+			)
+			.then(() => {
+				interaction.reply({ content: "Connected!", ephemeral: true });
+			});
 
-		interaction.reply({ content: "Connected!", ephemeral: true });
+		console.log(interaction.member.roles.highest.name);
 	},
 };

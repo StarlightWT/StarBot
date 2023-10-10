@@ -4,6 +4,7 @@ const userSchema = new mongoose.Schema({
 	id: String,
 	discordId: String,
 	subscribed: Boolean,
+	tier: String,
 	role: String,
 });
 
