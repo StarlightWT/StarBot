@@ -22,24 +22,30 @@ module.exports = {
 	async execute(interaction) {
 		const searchString = interaction.options.getString("search");
 		await mongoose.connect(config.DATABASE_URI);
-
 		var searchRecord =
 			(await schema.userModel.findOne({ id: searchString })) ||
-			(await schema.userModel.findOne({ username: searchString }));
+			(await schema.userModel.findOne({
+				username: { $regex: new RegExp(searchString, "i") },
+			})) ||
+			(await schema.userModel.findOne({ discordId: searchString }));
 		if (searchRecord == null)
 			return interaction.reply({ content: "User not found!", ephemeral: true });
 		var replyEmbed = new EmbedBuilder()
 			.setTitle(`User search: ${searchString}`)
-			.setColor("Greyple")
+			.setColor("#8f2efd")
 			.setFields(
-				{ name: "Username", value: searchRecord.username, inline: true },
+				{ name: "Username", value: searchRecord.username },
+				{
+					name: "Discord",
+					value: `<@${searchRecord.discordId}>`,
+				},
 				{
 					name: "subscribed",
 					value: `${searchRecord.subscribed}`,
-					inline: true,
 				},
 				{ name: "role", value: searchRecord.role, inline: true },
-				{ name: "id", value: searchRecord.id }
+				{ name: "tier", value: `${searchRecord.tier}`, inline: true },
+				{ name: "id", value: searchRecord.id, inline: true }
 			);
 
 		interaction.reply({ embeds: [replyEmbed], ephemeral: true });
