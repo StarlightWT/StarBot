@@ -11,7 +11,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("findlock")
 		.setDescription("Finds a lock in DB")
-		.setDefaultMemberPermissions(PermissionFlagsBits.ManageNicknames)
+		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 		.addStringOption((option) =>
 			option
 				.setName("search")
