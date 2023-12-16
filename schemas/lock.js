@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
+const { taskSchema } = require("./task");
+const { userSchema } = require("./user");
 const lockSchema = new mongoose.Schema({
 	id: String,
-	userId: String,
-	modules: Array,
+	user: userSchema,
+	modules: [taskSchema], // Array of modules
 });
 
 const lockModel = mongoose.model("Lock", lockSchema, "locks");
